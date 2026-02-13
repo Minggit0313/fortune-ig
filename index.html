@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🔮 命理諮詢｜一頁式預約</title>
+  <meta name="description" content="命理/塔羅/靈性諮詢｜預約流程、服務項目、常見Q&A、私訊快速預約" />
+
+  <style>
+    :root{
+      --bg:#070716;
+      --card:rgba(255,255,255,.06);
+      --border:rgba(255,255,255,.14);
+      --text:#f3f5ff;
+      --muted:rgba(243,245,255,.72);
+      --gold:#d4af37;
+      --gold2:#b9972f;
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 50% -10%, rgba(212,175,55,.20), transparent 60%),
+                  radial-gradient(900px 500px at 20% 10%, rgba(122,162,255,.12), transparent 60%),
+                  radial-gradient(900px 500px at 80% 10%, rgba(160,110,255,.10), transparent 60%),
+                  var(--bg);
+      overflow-x:hidden;
+    }
+
+    /* 星空：純 CSS 背景點點（避免外部圖片） */
+    .stars, .stars:before, .stars:after{
+      position:fixed; inset:0;
+      content:"";
+      pointer-events:none;
+      background-repeat:repeat;
+      opacity:.35;
+      z-index:-1;
+    }
+    .stars{
+      background-image:
+        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,.9) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 40px 70px, rgba(255,255,255,.7) 50%, transparent 51%),
+        radial-gradient(1.2px 1.2px at 130px 110px, rgba(255,255,255,.7) 50%, transparent 51%),
+        radial-gradient(1.6px 1.6px at 90px 140px, rgba(255,255,255,.65) 50%, transparent 51%);
+      background-size: 180px 180px;
+      animation: drift 90s linear infinite;
+    }
+    .stars:before{
+      background-image:
+        radial-gradient(2px 2px at 60px 20px, rgba(212,175,55,.85) 45%, transparent 46%),
+        radial-gradient(1.4px 1.4px at 140px 80px, rgba(255,255,255,.75) 50%, transparent 51%),
+        radial-gradient(1.2px 1.2px at 10px 120px, rgba(255,255,255,.6) 50%, transparent 51%);
+      background-size: 220px 220px;
+      opacity:.28;
+      animation: drift2 140s linear infinite;
+    }
+    .stars:after{
+      background-image:
+        radial-gradient(1.4px 1.4px at 30px 90px, rgba(255,255,255,.8) 50%, transparent 51%),
+        radial-gradient(1.2px 1.2px at 160px 40px, rgba(160,110,255,.7) 50%, transparent 51%),
+        radial-gradient(1.6px 1.6px at 120px 150px, rgba(255,255,255,.65) 50%, transparent 51%);
+      background-size: 260px 260px;
+      opacity:.22;
+      animation: drift3 200s linear infinite;
+    }
+    @keyframes drift{ from{transform:translateY(0)} to{transform:translateY(180px)} }
+    @keyframes drift2{ from{transform:translateY(0)} to{transform:translateY(220px)} }
+    @keyframes drift3{ from{transform:translateY(0)} to{transform:translateY(260px)} }
+
+    .wrap{max-width:980px; margin:0 auto; padding:26px 16px 60px;}
+    header{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter: blur(10px);
+      background: rgba(7,7,22,.70);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar{
+      max-width:980px; margin:0 auto; padding:12px 16px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px}
+    .sigil{
+      width:12px; height:12px; border-radius:50%;
+      background: var(--gold);
+      box-shadow: 0 0 18px rgba(212,175,55,.55);
+    }
+    nav{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+    nav a{
+      padding:8px 10px; border-radius:12px;
+      color:var(--muted);
+      border:1px solid transparent;
+    }
+    nav a:hover{
+      color:var(--text);
+      border-color: var(--border);
+      background: rgba(255,255,255,.05);
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
+      align-items:stretch;
+      margin-top:18px;
+    }
+    .card{
+      background: var(--card);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      padding:18px;
+      box-shadow: var(--shadow);
+    }
+    .title{
+      margin:0 0 10px;
+      font-size:34px;
+      line-height:1.15;
+      letter-spacing:.2px;
+    }
+    .subtitle{margin:0 0 14px; color:var(--muted); line-height:1.65}
+    .badge{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color:var(--muted);
+      font-size:13px;
+    }
+    .ctaRow{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:14px;
+    }
+    .btn{
+      display:flex; align-items:center; justify-content:center; gap:8px;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      font-weight:700;
+      cursor:pointer;
+    }
+    .btn:hover{background: rgba(255,255,255,.10)}
+    .btn.primary{
+      border-color: rgba(212,175,55,.45);
+      background: linear-gradient(180deg, rgba(212,175,55,.95), rgba(185,151,47,.95));
+      color:#120f07;
+    }
+    .btn.primary:hover{filter:brightness(1.03)}
+    .fine{
+      margin-top:10px;
+      font-size:13px;
+      color: rgba(243,245,255,.62);
+      line-height:1.5;
+    }
+
+    .profile{
+      display:flex; gap:14px; align-items:center;
+      padding:14px;
+      border-radius: 16px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+    }
+    .avatar{
+      width:66px; height:66px; border-radius:18px;
+      background: radial-gradient(circle at 30% 30%, rgba(212,175,55,.7), rgba(160,110,255,.35), rgba(255,255,255,.08));
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow: 0 12px 40px rgba(0,0,0,.35);
+      display:grid; place-items:center;
+      font-weight:900;
+      color: rgba(18,15,7,.85);
+    }
+    .profile h3{margin:0; font-size:16px}
+    .profile p{margin:6px 0 0; color:var(--muted); line-height:1.55; font-size:13px}
+
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;}
+    .section{margin-top:18px;}
+    .section h2{
+      margin:0 0 10px;
+      font-size:18px;
+      letter-spacing:.2px;
+    }
+
+    .list{
+      display:grid; gap:10px;
+    }
+    .item{
+      padding:12px 12px;
+      border-radius: 14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+    }
+    .item b{display:block; margin-bottom:4px}
+    .item span{color:var(--muted); font-size:13px; line-height:1.55}
+    .price{
+      white-space:nowrap;
+      font-weight:900;
+      color: var(--gold);
+      letter-spacing:.3px;
+    }
+
+    /* FAQ 手風琴 */
+    details{
+      border:1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(255,255,255,.04);
+      padding:12px 12px;
+    }
+    details[open]{background: rgba(255,255,255,.06)}
+    summary{
+      cursor:pointer;
+      font-weight:800;
+      list-style:none;
+      outline:none;
+    }
+    summary::-webkit-details-marker{display:none}
+    summary:after{
+      content:"＋";
+      float:right;
+      color: var(--muted);
+      font-weight:900;
+    }
+    details[open] summary:after{content:"－"}
+    .faqA{
+      margin-top:10px;
+      color: var(--muted);
+      line-height:1.7;
+      font-size:14px;
+    }
+
+    footer{
+      margin-top:20px;
+      color: rgba(243,245,255,.55);
+      font-size:12px;
+      line-height:1.6;
+      text-align:center;
+    }
+
+    /* 手機版 */
+    @media (max-width: 820px){
+      .hero{grid-template-columns:1fr}
+      .grid2{grid-template-columns:1fr}
+      .title{font-size:30px}
+      .ctaRow{grid-template-columns:1fr}
+      nav{display:none;}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="stars"></div>
+
+  <header>
+    <div class="topbar">
+      <div class="brand"><span class="sigil"></span> 命理諮詢｜預約頁</div>
+      <nav>
+        <a href="#services">服務</a>
+        <a href="#how">預約流程</a>
+        <a href="#faq">Q&A</a>
+        <a href="#notice">注意事項</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="card">
+        <div class="badge">🔮 塔羅・八字・紫微・靈性｜線上諮詢</div>
+        <h1 class="title">用命理看清方向<br>把焦慮變成選擇</h1>
+        <p class="subtitle">
+          你可以把它當作「人生策略會議」：釐清現況、看見趨勢、做出更適合你的決定。<br>
+          （命理屬趨勢參考，重點是把問題拆解到可行動。）
+        </p>
+
+        <div class="ctaRow">
+          <!-- IG 私訊：把你的帳號改掉 -->
+          <a class="btn primary" id="btnIg" href="https://ig.me/m/你的IG帳號" target="_blank" rel="noreferrer">
+            ✉️ IG 私訊預約
+          </a>
+          <!-- LINE：把你的連結改掉（或換成 line.me/R/ti/p/~xxxx） -->
+          <a class="btn" id="btnLine" href="https://line.me/R/ti/p/~你的LineID" target="_blank" rel="noreferrer">
+            💬 LINE 快速詢問
+          </a>
+        </div>
+
+        <div class="ctaRow">
+          <!-- 表單：可放 Google Form -->
+          <a class="btn" id="btnForm" href="https://forms.gle/你的表單連結" target="_blank" rel="noreferrer">
+            📝 填表單預約
+          </a>
+          <button class="btn" id="btnCopy">
+            🔗 複製本頁連結
+          </button>
+        </div>
+
+        <div class="fine">
+          ⏱️ 回覆時間：每日 11:00–22:00（忙碌時會依序回覆）<br>
+          🔒 隱私保護：不公開、不轉傳你的任何諮詢內容
+        </div>
+      </div>
+
+      <aside class="card">
+        <div class="profile">
+          <div class="avatar">玄</div>
+          <div>
+            <h3>老師姓名｜玄學諮詢師</h3>
+            <p>
+              專長：感情關係、事業轉換、流年規劃、決策卡關。<br>
+              風格：溫柔但直球，重視「可落地的建議」。
+            </p>
+          </div>
+        </div>
+
+        <div class="section" style="margin-top:14px">
+          <h2>你適合來問什麼？</h2>
+          <div class="list">
+            <div class="item"><div><b>感情/復合/曖昧</b><span>對方想法、相處模式、下一步策略</span></div><div class="price">熱門</div></div>
+            <div class="item"><div><b>事業/轉職/升遷</b><span>適合領域、面試時機、職涯方向</span></div><div class="price">推薦</div></div>
+            <div class="item"><div><b>流年/運勢規劃</b><span>今年重點、避雷提醒、月份節奏</span></div><div class="price">必問</div></div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="grid2">
+      <div class="card section" id="services">
+        <h2>服務項目與價格</h2>
+        <div class="list">
+          <div class="item">
+            <div>
+              <b>塔羅快問快答（20 分鐘）</b>
+              <span>適合：單一問題、需要快速釐清方向</span>
+            </div>
+            <div class="price">NT$ 600</div>
+          </div>
+          <div class="item">
+            <div>
+              <b>深度諮詢（40 分鐘）</b>
+              <span>適合：感情/事業卡關、需要策略與行動方案</span>
+            </div>
+            <div class="price">NT$ 1200</div>
+          </div>
+          <div class="item">
+            <div>
+              <b>八字/紫微（60 分鐘）</b>
+              <span>適合：人生方向、流年節點、長期規劃</span>
+            </div>
+            <div class="price">NT$ 1800</div>
+          </div>
+          <div class="item">
+            <div>
+              <b>合盤/關係分析（60 分鐘）</b>
+              <span>適合：情侶/曖昧/合作夥伴相處模式與盲點</span>
+            </div>
+            <div class="price">NT$ 2200</div>
+          </div>
+        </div>
+        <div class="fine">＊價格可依老師方案調整；若有「加購錄音/文字整理」也可加在這裡。</div>
+      </div>
+
+      <div class="card section" id="how">
+        <h2>預約流程</h2>
+        <div class="list">
+          <div class="item">
+            <div>
+              <b>1️⃣ 私訊/LINE：告知想問的主題</b>
+              <span>例如：感情、事業、流年、合盤；也可先說你最困擾的點。</span>
+            </div>
+            <div class="price">Step 1</div>
+          </div>
+          <div class="item">
+            <div>
+              <b>2️⃣ 提供資料（依項目）</b>
+              <span>塔羅：問題背景；八字/紫微：姓名、出生年月日、出生時間/地點（越準越好）。</span>
+            </div>
+            <div class="price">Step 2</div>
+          </div>
+          <div class="item">
+            <div>
+              <b>3️⃣ 確認時段與付款</b>
+              <span>完成付款後保留時段；諮詢方式：語音/通話/文字（依老師習慣）。</span>
+            </div>
+            <div class="price">Step 3</div>
+          </div>
+        </div>
+        <div class="ctaRow" style="margin-top:14px">
+          <a class="btn primary" href="https://ig.me/m/你的IG帳號" target="_blank" rel="noreferrer">立即私訊預約</a>
+          <a class="btn" href="#faq">先看常見Q&A</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section" id="faq">
+      <h2>常見 Q&A（點開看答案）</h2>
+
+      <div class="list">
+        <details>
+          <summary>Q：我該怎麼描述問題才會更準？</summary>
+          <div class="faqA">
+            A：先說「你想要達成什麼」＋「目前卡在哪裡」＋「你已經做過什麼」。  
+            例如：我想跟對方穩定交往，但他忽冷忽熱，我已經主動約兩次都被推掉。
+          </div>
+        </details>
+
+        <details>
+          <summary>Q：一定要提供出生時間嗎？不知道怎麼辦？</summary>
+          <div class="faqA">
+            A：塔羅不一定需要；八字/紫微若不確定出生時間，仍可先用已知資料看大方向，或改用塔羅/靈性諮詢方式切入。
+          </div>
+        </details>
+
+        <details>
+          <summary>Q：可以問「對方有沒有喜歡我」這種問題嗎？</summary>
+          <div class="faqA">
+            A：可以，但我會更建議把問題升級成「我怎麼做更有機會走向我想要的結果？」  
+            這樣你拿到的是可執行的策略，而不是只得到一個是/否答案。
+          </div>
+        </details>
+
+        <details>
+          <summary>Q：付款方式有哪些？需要先付嗎？</summary>
+          <div class="faqA">
+            A：一般是轉帳/Line Pay（依老師為準）。為保留時段通常會先收款；若有特殊狀況可先說明協調。
+          </div>
+        </details>
+
+        <details>
+          <summary>Q：諮詢內容會被公開嗎？</summary>
+          <div class="faqA">
+            A：不會。你的資料與內容都只用於當次諮詢，尊重隱私。
+          </div>
+        </details>
+
+        <details>
+          <summary>Q：可以問健康、生死、法律訴訟、投資明牌嗎？</summary>
+          <div class="faqA">
+            A：這類問題風險高，我會建議以「情緒支持/趨勢參考」為主，並同時尋求專業人士協助（醫師/律師/合格理專）。  
+            我可以陪你釐清焦慮與決策方向，但不取代專業診斷或保證結果。
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="card section" id="notice">
+      <h2>注意事項</h2>
+      <div class="list">
+        <div class="item">
+          <div>
+            <b>準時與改期</b>
+            <span>遲到將壓縮諮詢時間；若需改期請至少提前 24 小時告知（可依老師規則調整）。</span>
+          </div>
+          <div class="price">重要</div>
+        </div>
+        <div class="item">
+          <div>
+            <b>命理定位</b>
+            <span>命理提供趨勢與建議，不保證特定結果；你的選擇與行動才是改變的關鍵。</span>
+          </div>
+          <div class="price">提醒</div>
+        </div>
+        <div class="item">
+          <div>
+            <b>未成年人</b>
+            <span>若為未成年人，建議由家長同意或陪同諮詢（可依老師接案規則）。</span>
+          </div>
+          <div class="price">規範</div>
+        </div>
+      </div>
+
+      <div class="ctaRow" style="margin-top:14px">
+        <a class="btn primary" href="https://ig.me/m/你的IG帳號" target="_blank" rel="noreferrer">📩 直接私訊我</a>
+        <a class="btn" href="https://line.me/R/ti/p/~你的LineID" target="_blank" rel="noreferrer">💬 用 LINE 聯絡</a>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> 命理諮詢頁｜本頁用於 IG 導流與預約資訊整理。<br>
+      若你是經營者：把「IG帳號 / LINE連結 / 表單」換成你的即可使用。
+    </footer>
+  </main>
+
+  <script>
+    // 年份
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // 複製本頁連結
+    document.getElementById("btnCopy").addEventListener("click", async () => {
+      const url = window.location.href;
+      try{
+        await navigator.clipboard.writeText(url);
+        alert("已複製連結：\\n" + url);
+      }catch(e){
+        // fallback
+        const tmp = document.createElement("textarea");
+        tmp.value = url;
+        document.body.appendChild(tmp);
+        tmp.select();
+        document.execCommand("copy");
+        document.body.removeChild(tmp);
+        alert("已複製連結：\\n" + url);
+      }
+    });
+  </script>
+</body>
+</html>
