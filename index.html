@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>🔮 璃｜命理諮詢預約</title>
-  <meta name="description" content="璃｜塔羅・八字・紫微・靈性諮詢｜IG 私訊預約" />
+  <meta name="description" content="璃｜塔羅・紫微・靈性諮詢｜IG 私訊預約" />
 
   <style>
     :root{
@@ -24,7 +24,7 @@
       color:var(--text);
       background: radial-gradient(1200px 600px at 50% -10%, rgba(212,175,55,.20), transparent 60%), var(--bg);
     }
-    .wrap{max-width:900px;margin:auto;padding:24px}
+    .wrap{max-width:920px;margin:auto;padding:24px}
     .card{
       background:var(--card);
       border:1px solid var(--border);
@@ -34,14 +34,14 @@
       box-shadow:var(--shadow);
     }
     h1{margin:0 0 10px;font-size:30px}
-    h2{margin:0 0 10px;font-size:18px}
+    h2{margin:0 0 12px;font-size:18px}
     p{color:var(--muted);line-height:1.7;margin:10px 0}
     .btn{
       display:block;
       text-align:center;
       padding:14px;
       border-radius:14px;
-      font-weight:700;
+      font-weight:800;
       text-decoration:none;
       margin-top:12px;
       background:linear-gradient(180deg,#d4af37,#b9972f);
@@ -52,6 +52,7 @@
       background:transparent;
       color:var(--text);
       border:1px solid var(--border);
+      font-weight:700;
     }
     .price{color:var(--gold);font-weight:900}
     footer{
@@ -59,19 +60,6 @@
       font-size:12px;
       color:rgba(243,245,255,.5);
       margin-top:30px;
-    }
-
-    /* 圖片與文案排版 */
-    .media{
-      padding:16px;
-    }
-    .media img{
-      width:100%;
-      display:block;
-      border-radius:16px;
-      box-shadow:0 12px 32px rgba(0,0,0,.45);
-      margin-bottom:14px;
-      object-fit:cover;
     }
     .tag{
       display:inline-block;
@@ -87,12 +75,80 @@
       margin:10px 0 0;
       padding-left:18px;
       color:var(--muted);
-      line-height:1.8;
+      line-height:1.9;
     }
     .divider{
       height:1px;
       background:rgba(255,255,255,.10);
       margin:14px 0;
+    }
+
+    /* ====== Carousel ====== */
+    .carousel{
+      position:relative;
+      overflow:hidden;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(0,0,0,.18);
+    }
+    .track{
+      display:flex;
+      transition: transform .35s ease;
+      will-change: transform;
+    }
+    .slide{
+      min-width:100%;
+      padding:14px;
+    }
+    .slide img{
+      width:100%;
+      display:block;
+      border-radius:14px;
+      box-shadow:0 12px 32px rgba(0,0,0,.45);
+      object-fit:cover;
+    }
+    .caption{
+      margin-top:12px;
+      padding:12px 12px 2px;
+    }
+    .controls{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-top:12px;
+    }
+    .navbtn{
+      background:transparent;
+      border:1px solid var(--border);
+      color:var(--text);
+      padding:8px 14px;
+      border-radius:999px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .navbtn:hover{background:rgba(255,255,255,.06)}
+    .dots{
+      display:flex;
+      gap:8px;
+      justify-content:center;
+      flex:1;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      border:1px solid rgba(255,255,255,.35);
+      background:transparent;
+      cursor:pointer;
+      opacity:.9;
+    }
+    .dot.active{
+      background:var(--gold);
+      border-color:var(--gold);
+    }
+    .hint{
+      font-size:12px;
+      color:rgba(243,245,255,.55);
+      margin-top:8px;
     }
   </style>
 </head>
@@ -100,10 +156,11 @@
 <body>
   <div class="wrap">
 
+    <!-- Header -->
     <div class="card">
       <h1>🔮 璃｜命理諮詢</h1>
       <p>
-        塔羅・八字・紫微・靈性指引<br>
+        塔羅・紫微・靈性指引<br>
         用命理看清方向，把焦慮變成選擇。
       </p>
 
@@ -122,100 +179,100 @@
       </a>
     </div>
 
-   <div class="card media">
-  <span class="tag">🕯️💞 姻緣靜心儀式香薰蠟燭</span>
-  <img src="assets/wealth.jpg" alt="姻緣靜心儀式香薰蠟燭" loading="lazy">
+    <!-- Carousel + Copy -->
+    <div class="card">
+      <h2>作品展示（可左右滑動）</h2>
 
-  <p>
-    這不是催桃花、亂牽線的那種，
-    而是一顆幫你把姻緣頻率慢慢調好的蠟燭 ✨
-  </p>
+      <div class="carousel" id="carousel">
+        <div class="track" id="track">
 
-  <p>
-    🌸 依你的屬性搭配姻緣向乾燥花。<br>
-    每一顆配置都不一樣，重點不是「多」，<br>
-    而是讓適合你的那份連結更容易靠近你 💗
-  </p>
+          <!-- Slide 1: Energy -->
+          <div class="slide">
+            <img src="assets/energy.jpg" alt="能量陣法圖" loading="lazy">
+            <div class="caption">
+              <span class="tag">💫🎨 能量陣法圖｜功能自選 🎨💫</span>
+              <p>
+                這是一張以「功能」為核心設計的能量陣法圖，不複雜、不用懂陣法，
+                選你現在最需要的那一個就好 ✨
+              </p>
 
-  <p><b>🕯️ 溫柔使用方式</b></p>
-  <ul class="list">
-    <li>一次燃燒 15 分鐘</li>
-    <li>一顆約可使用 15–20 次</li>
-    <li>適合靜心、冥想、許願、睡前安靜時點燃</li>
-  </ul>
+              <p><b>🌀 可自選功能（擇一）</b></p>
+              <ul class="list">
+                <li>🍀 幸運｜讓事情比較順、少卡關</li>
+                <li>💰 財運｜提升流動感，讓錢比較好來</li>
+                <li>💞 姻緣｜調整情感頻率，讓關係更順</li>
+                <li>🤍 人緣｜改善互動氣場，減少摩擦</li>
+                <li>✨ 淨化｜清理雜亂能量，回到乾淨狀態</li>
+                <li>🛡️ 守護｜穩定氣場，給自己一層安心</li>
+              </ul>
 
-  <p>
-    不用燒很久。<br>
-    那 15 分鐘，就是你跟自己，
-    也跟未來緣分對齊的時間 ✨
-  </p>
+              <p><b>🎨 價格：</b><span class="price">NT$ 900 / 次</span><br>
+                一個功能，一張陣法圖。簡單、清楚、好上手 💛
+              </p>
 
-  <p>
-    🌿 香薰設計是柔軟、不侵略的氣味。<br>
-    讓心慢慢打開，不是急著抓住誰，<br>
-    而是讓「對的人」比較找得到你 💞
-  </p>
+              <div class="divider"></div>
 
-  <p>
-    💛 這顆蠟燭不是逼你談戀愛，而是陪你：
-  </p>
+              <p><b>💎🌈 升級方案｜光影石能量項鏈（客製） 🌈💎</b></p>
+              <p>
+                想把能量從「放著用」變成「隨身帶著」可以升級成光影石項鏈 ✨
+                會將你選擇的陣法圖客製封存於光影石中，讓能量在日常中陪著你 💎
+              </p>
+              <p>
+                💬 款式與細節皆為私訊討論，依風格客製（每一條都不一樣）🤍
+              </p>
+              <p><b>💎 價格：</b><span class="price">NT$ 2600 / 條</span>（含能量陣法圖客製）</p>
+            </div>
+          </div>
 
-  <ul class="list">
-    <li>👉 安住自己</li>
-    <li>👉 放下過往卡住的情緒</li>
-    <li>👉 讓姻緣走進來時，你接得住</li>
-  </ul>
+          <!-- Slide 2: Wealth -->
+          <div class="slide">
+            <img src="assets/wealth.jpg" alt="招財儀式香薰蠟燭" loading="lazy">
+            <div class="caption">
+              <span class="tag">🕯️💰 屬性招財儀式香薰蠟燭</span>
+              <p>
+                不是一般點來放著的蠟燭，而是專門為「靜心＋招財儀式」設計的一顆 ✨
+              </p>
 
-  <p>
-    <b>💞 價格：</b><span class="price">NT$ 2500 / 顆</span><br>
-    小量製作、能量型配置。<br>
-    每一顆都是為「剛剛好的緣分」準備的 🕯️
-  </p>
-</div>
+              <p>
+                🌸 依你的屬性客製搭配乾燥花，每一顆配置都不一樣。<br>
+                不是裝飾，是為了加強你的財運流動而放的 💛
+              </p>
 
-    <!-- ✅ 招財儀式香薰蠟燭（圖 + 文案） -->
-  <div class="card media">
-  <span class="tag">🕯️💰 屬性招財儀式香薰蠟燭</span>
-  <img src="assets/wealth.jpg" alt="屬性招財儀式香薰蠟燭" loading="lazy">
+              <p><b>🕯️ 使用方式</b></p>
+              <ul class="list">
+                <li>一次燃燒約 15 分鐘</li>
+                <li>一顆約可使用 15–20 次</li>
+                <li>適合靜心、冥想、許願時點燃</li>
+              </ul>
 
-  <p>
-    不是一般隨意點燃的蠟燭，而是為「靜心 × 專注 × 財務意圖設定」設計的儀式型香薰蠟燭 ✨
-  </p>
+              <p>
+                重點是「專注那 15 分鐘」✨
+                讓心安靜下來，財自然比較聽得懂你在說什麼 💸
+              </p>
 
-  <p>
-    🌸 依個人屬性客製搭配乾燥花材，每一顆配置皆不同。<br>
-    並非單純裝飾，而是作為儀式專注與象徵意義的延伸 💛
-  </p>
+              <p>
+                🌿 香薰設計：氣味不嗆、不厚重，是那種一點就會讓人慢慢放鬆的香，陪你把注意力拉回自己 💫
+              </p>
 
-  <p><b>🕯️ 使用方式</b></p>
-  <ul class="list">
-    <li>建議每次燃燒約 15 分鐘</li>
-    <li>單顆可使用約 15–20 次</li>
-    <li>適合於靜心、冥想、設定目標或書寫願望時點燃</li>
-  </ul>
+              <p><b>💰 價格：</b><span class="price">NT$ 2500 / 顆</span><br>
+                小量製作、能量型配置，每一顆都是有安排的緣分 🕯️✨
+              </p>
+            </div>
+          </div>
 
-  <p>
-    不需要長時間燃燒，重點在於專注的 15 分鐘 ✨
-    讓心沉澱下來，釐清自己的財務目標與方向 💸
-  </p>
+        </div>
+      </div>
 
-  <p>
-    🌿 香氣設計：氣味溫和、不刺鼻、不厚重，
-    是能慢慢放鬆情緒、幫助集中注意力的調性 💫
-  </p>
+      <div class="controls">
+        <button class="navbtn" type="button" id="prevBtn">← 上一張</button>
+        <div class="dots" id="dots"></div>
+        <button class="navbtn" type="button" id="nextBtn">下一張 →</button>
+      </div>
 
-  <p>
-    💛 這不是一次性消耗品，而是一顆可以陪伴你建立專注儀式感、
-    慢慢累積內在力量的香薰蠟燭 🕯️✨
-  </p>
+      <div class="hint">提示：手機可左右滑動圖片。要換文案只改每張圖下面的文字區塊即可。</div>
+    </div>
 
-  <p>
-    <b>💰 價格：</b><span class="price">NT$ 2500 / 顆</span><br>
-    小量製作、客製配置
-  </p>
-</div>
-
-    <!-- ✅ 服務項目與收費（你原本的） -->
+    <!-- Services -->
     <div class="card">
       <h2>服務項目與收費</h2>
 
@@ -230,6 +287,7 @@
       ③ 圓盤占星陣（完整解析）　<span class="price">NT$ 1200</span></p>
     </div>
 
+    <!-- Booking -->
     <div class="card">
       <h2>預約方式</h2>
       <p>
@@ -246,6 +304,7 @@
       </a>
     </div>
 
+    <!-- Notes -->
     <div class="card">
       <h2>注意事項</h2>
       <p>
@@ -254,10 +313,84 @@
       </p>
     </div>
 
-    <footer>
-      © 2026 璃｜命理諮詢頁
-    </footer>
+    <footer>© 2026 璃｜命理諮詢頁</footer>
 
   </div>
+
+  <script>
+    // ====== Carousel logic (buttons + dots + touch swipe) ======
+    const track = document.getElementById('track');
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dotsWrap = document.getElementById('dots');
+    const carousel = document.getElementById('carousel');
+
+    let index = 0;
+
+    function clampIndex(i){
+      const n = slides.length;
+      return (i % n + n) % n;
+    }
+
+    function renderDots(){
+      dotsWrap.innerHTML = '';
+      slides.forEach((_, i) => {
+        const b = document.createElement('button');
+        b.className = 'dot' + (i === index ? ' active' : '');
+        b.type = 'button';
+        b.setAttribute('aria-label', `切換到第 ${i+1} 張`);
+        b.addEventListener('click', () => goTo(i));
+        dotsWrap.appendChild(b);
+      });
+    }
+
+    function update(){
+      track.style.transform = `translateX(-${index * 100}%)`;
+      Array.from(dotsWrap.children).forEach((d, i) => {
+        d.classList.toggle('active', i === index);
+      });
+    }
+
+    function goTo(i){
+      index = clampIndex(i);
+      update();
+    }
+
+    function next(){ goTo(index + 1); }
+    function prev(){ goTo(index - 1); }
+
+    prevBtn.addEventListener('click', prev);
+    nextBtn.addEventListener('click', next);
+
+    // Touch swipe (mobile)
+    let startX = 0;
+    let dx = 0;
+    let touching = false;
+
+    carousel.addEventListener('touchstart', (e) => {
+      if (!e.touches || e.touches.length !== 1) return;
+      touching = true;
+      startX = e.touches[0].clientX;
+      dx = 0;
+    }, {passive:true});
+
+    carousel.addEventListener('touchmove', (e) => {
+      if (!touching) return;
+      dx = e.touches[0].clientX - startX;
+    }, {passive:true});
+
+    carousel.addEventListener('touchend', () => {
+      if (!touching) return;
+      touching = false;
+      // threshold
+      if (dx > 50) prev();
+      else if (dx < -50) next();
+    });
+
+    // Init
+    renderDots();
+    update();
+  </script>
 </body>
 </html>
